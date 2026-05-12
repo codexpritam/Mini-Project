@@ -5,7 +5,7 @@ import api from "../api/axios"
 import Navbar from "../components/Navbar"
 import AddExpenseModal from "../components/AddExpenseModal"
 import AddIncomeModal from "../components/AddIncomeModal"
-import DashboardCharts from "../components/DashboardCharts"
+import DashboardCharts from "../components/Dashboardcharts"
 
 function Dashboard() {
   const [data, setData] =
