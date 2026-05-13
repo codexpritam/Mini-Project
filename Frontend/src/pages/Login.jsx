@@ -59,7 +59,7 @@ function Login() {
         setError("")
         setSuccess("")
 
-        await api.post(
+     const res =   await api.post(
           "/login",
           {
             emailId,
@@ -112,7 +112,7 @@ localStorage.setItem(
         const user =
           result.user
 
-        await api.post(
+     const res =   await api.post(
           "/google-auth",
           {
             name:
