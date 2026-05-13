@@ -32,6 +32,7 @@ app.use(cors({
 }));//frontend se connect krega syd
 
 app.use(express.json());//parse JSON body from requests
+app.set("trust proxy", 1);
 app.use(cookieParser());//request ki cookies ko read karne ke liye hota hai
 
 app.get("/", (req, res) => {
