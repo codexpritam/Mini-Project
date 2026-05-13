@@ -66,7 +66,10 @@ function Login() {
             password
           }
         )
-
+localStorage.setItem(
+  "token",
+  res.data.token
+)
         navigate(
           "/dashboard"
         )
@@ -120,7 +123,11 @@ function Login() {
               user.photoURL
           }
         )
-
+  localStorage.setItem(
+  "token",
+  res.data.token
+)
+         
         navigate(
           "/dashboard"
         )
