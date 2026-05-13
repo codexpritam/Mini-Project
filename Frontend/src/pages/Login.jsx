@@ -59,18 +59,17 @@ function Login() {
         setError("")
         setSuccess("")
 
-     const res =   await api.post(
+        await api.post(
           "/login",
           {
             emailId,
             password
           }
         )
-localStorage.setItem(
-  "token",
-  res.data.token
-)
-        window.location.href = "/dashboard"
+
+        navigate(
+          "/dashboard"
+        )
 
       } catch (err) {
 
@@ -110,7 +109,7 @@ localStorage.setItem(
         const user =
           result.user
 
-     const res =   await api.post(
+        await api.post(
           "/google-auth",
           {
             name:
@@ -121,12 +120,10 @@ localStorage.setItem(
               user.photoURL
           }
         )
-  localStorage.setItem(
-  "token",
-  res.data.token
-)
-         
-       window.location.href = "/dashboard"
+
+        navigate(
+          "/dashboard"
+        )
 
       } catch (err) {
         setError(

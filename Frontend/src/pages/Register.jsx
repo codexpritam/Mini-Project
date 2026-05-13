@@ -68,7 +68,8 @@ const handleRegister =
         await api.post(
           "/register",
           {
-            name:firstName,
+            name:
+              firstName,
             emailId,
             password
           }
