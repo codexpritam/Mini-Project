@@ -348,7 +348,8 @@ createToken(user)
 setCookie(res, token)
 
 res.json({
-message: "Google login successful"
+message: "Google login successful",
+token
 })
 
 }catch(err){
