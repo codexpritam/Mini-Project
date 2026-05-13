@@ -370,12 +370,10 @@ try{
 const { token } =
 req.cookies
 
-if(token){
-await redisClient.setEx(
-`token:${token}`,
-86400,
-"blocked"
-)
+if (!token) {
+  return res.json({
+    message: "Logout successful"
+  });
 }
 
 res.clearCookie("token", {
