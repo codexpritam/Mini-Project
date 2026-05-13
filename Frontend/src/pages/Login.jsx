@@ -70,9 +70,7 @@ localStorage.setItem(
   "token",
   res.data.token
 )
-        navigate(
-          "/dashboard"
-        )
+        window.location.href = "/dashboard"
 
       } catch (err) {
 
@@ -128,9 +126,7 @@ localStorage.setItem(
   res.data.token
 )
          
-        navigate(
-          "/dashboard"
-        )
+       window.location.href = "/dashboard"
 
       } catch (err) {
         setError(
