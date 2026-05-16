@@ -40,16 +40,13 @@ const setCookie = (res, token) => {
 // ---------------- MAIL ----------------
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp-relay.brevo.com",
   port: 587,
   secure: false,
-  requireTLS: true,
-  family: 4,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS
-  },
-  connectionTimeout: 20000
+  }
 })
 
 transporter.verify((error, success) => {
