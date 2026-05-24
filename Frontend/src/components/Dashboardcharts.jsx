@@ -89,12 +89,11 @@ function DashboardCharts({
 
   return (
     <div className="overflow-x-auto"> 
-    <div className="grid md:grid-cols-3 gap-7 mt-10">
-
+<div className="grid grid-cols-1 md:grid-cols-3 gap-7 mt-10">
       {/* Left Card */}
-      <div className="md:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-sm p-8 hover:shadow-lg transition">
+      <div className="md:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-sm p-5 md:p-8 hover:shadow-lg transition">
 
-        <h2 className="text-2xl font-bold text-slate-900 mb-8">
+        <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-8">
           Spending by Category
         </h2>
 
@@ -160,15 +159,15 @@ function DashboardCharts({
       {/* Right Card */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 min-h-[470px] hover:shadow-lg transition">
 
-        <h2 className="text-2xl font-bold text-slate-900 mb-6">
+        <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-6">
           Personal vs Group
         </h2>
 
         <div className="flex justify-center">
 
           <PieChart
-            width={270}
-            height={270}
+            width={220}
+            height={220}
           >
             <Pie
               data={

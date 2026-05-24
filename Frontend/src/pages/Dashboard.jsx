@@ -177,13 +177,13 @@ function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
 
           {/* Remaining Balance */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 hover:shadow-lg transition">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 md:p-8 hover:shadow-lg transition">
 
             <h2 className="text-cyan-600 text-lg font-semibold mb-3">
               Remaining Balance
             </h2>
 
-            <p className="text-4xl font-bold text-slate-900">
+            <p className="text-3xl md:text-4xl font-bold text-slate-900">
               ₹ {data.remaining}
             </p>
 
@@ -200,7 +200,7 @@ function Dashboard() {
               Total Income
             </h2>
 
-            <p className="text-4xl font-bold text-slate-900">
+            <p className="text-3xl md:text-4xl font-bold text-slate-900">
               ₹ {data.totalIncome}
             </p>
 
@@ -217,7 +217,7 @@ function Dashboard() {
               Total Expense
             </h2>
 
-            <p className="text-4xl font-bold text-slate-900">
+            <p className="text-3xl md:text-4xl font-bold text-slate-900">
               ₹ {data.totalExpense}
             </p>
 

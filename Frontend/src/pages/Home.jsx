@@ -12,6 +12,8 @@ import {
   ChevronDown
 } from "lucide-react"
 
+import { useState } from "react"
+
 function Home() {
   const features = [
     {
@@ -80,6 +82,9 @@ function Home() {
     }
   ]
 
+  const [mobileMenu, setMobileMenu] =
+  useState(false)
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
 
@@ -109,7 +114,77 @@ function Home() {
 
 </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
+            <button
+  onClick={() =>
+    setMobileMenu(!mobileMenu)
+  }
+  className="md:hidden text-3xl"
+>
+ ☰
+</button> 
+{
+mobileMenu && (
+
+<div className="
+absolute
+top-24
+left-0
+w-full
+bg-white
+border-b
+border-slate-200
+shadow-lg
+flex
+flex-col
+items-center
+gap-4
+py-6
+md:hidden
+z-50
+">
+
+  <Link
+    to="/login"
+    onClick={() =>
+      setMobileMenu(false)
+    }
+    className="
+    w-[90%]
+    text-center
+    px-5 py-3
+    rounded-xl
+    border
+    border-slate-300
+    "
+  >
+    Login
+  </Link>
+
+  <Link
+    to="/register"
+    onClick={() =>
+      setMobileMenu(false)
+    }
+    className="
+    w-[90%]
+    text-center
+    px-5 py-3
+    rounded-xl
+    bg-gradient-to-r
+    from-cyan-500
+    to-blue-600
+    text-white
+    font-semibold
+    "
+  >
+    Get Started
+  </Link>
+
+</div>
+
+)
+}
 
             <Link
               to="/login"
