@@ -154,9 +154,9 @@ function Home() {
 
             <div className="
               absolute
-              top-24
+              top-20
               left-0
-              w-full
+              w-[220px]
               bg-white
               border-b
               border-slate-200
@@ -164,7 +164,7 @@ function Home() {
               flex
               flex-col
               items-center
-              gap-4
+              gap-3
               py-6
               md:hidden
               z-50
