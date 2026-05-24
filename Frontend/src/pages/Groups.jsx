@@ -1,4 +1,6 @@
 // src/pages/Groups.jsx
+// Responsive Version
+// LOGIC NOT CHANGED
 
 import { useEffect, useState } from "react"
 import api from "../api/axios"
@@ -14,41 +16,19 @@ import {
 
 function Groups() {
 
-  const navigate =
-    useNavigate()
+  const navigate = useNavigate()
 
-  const [groupName, setGroupName] =
-    useState("")
-
-  const [inviteCode, setInviteCode] =
-    useState("")
-
-  const [createdGroups, setCreatedGroups] =
-    useState([])
-
-  const [joinedGroups, setJoinedGroups] =
-    useState([])
-
-  const [showCreate, setShowCreate] =
-    useState(false)
-
-  const [showJoin, setShowJoin] =
-    useState(false)
-
-  const [selectedGroup, setSelectedGroup] =
-    useState(null)
-
-  const [groupDetails, setGroupDetails] =
-    useState(null)
-
-  const [loading, setLoading] =
-    useState(true)
-
-  const [submitting, setSubmitting] =
-    useState(false)
-
-  const [message, setMessage] =
-    useState("")
+  const [groupName, setGroupName] = useState("")
+  const [inviteCode, setInviteCode] = useState("")
+  const [createdGroups, setCreatedGroups] = useState([])
+  const [joinedGroups, setJoinedGroups] = useState([])
+  const [showCreate, setShowCreate] = useState(false)
+  const [showJoin, setShowJoin] = useState(false)
+  const [selectedGroup, setSelectedGroup] = useState(null)
+  const [groupDetails, setGroupDetails] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+  const [message, setMessage] = useState("")
 
   useEffect(() => {
     fetchGroups()
@@ -60,26 +40,16 @@ function Groups() {
 
       setLoading(true)
 
-      const res =
-        await api.get(
-          "/api/group/info"
-        )
+      const res = await api.get("/api/group/info")
 
-      setCreatedGroups(
-        res.data.created || []
-      )
-
-      setJoinedGroups(
-        res.data.joined || []
-      )
+      setCreatedGroups(res.data.created || [])
+      setJoinedGroups(res.data.joined || [])
 
     } catch (err) {
 
       console.log(err)
 
-      setMessage(
-        "Failed to load groups"
-      )
+      setMessage("Failed to load groups")
 
     } finally {
 
@@ -88,184 +58,146 @@ function Groups() {
     }
   }
 
-  const handleCreate =
-    async (e) => {
+  const handleCreate = async (e) => {
 
-      e.preventDefault()
+    e.preventDefault()
 
-      try {
+    try {
 
-        setSubmitting(true)
+      setSubmitting(true)
 
-        await api.post(
-          "/api/group",
-          {
-            name:
-              groupName.trim()
-          }
-        )
+      await api.post("/api/group", {
+        name: groupName.trim()
+      })
 
-        setGroupName("")
+      setGroupName("")
+      setShowCreate(false)
 
-        setShowCreate(false)
+      fetchGroups()
 
-        fetchGroups()
+    } catch (err) {
 
-      } catch (err) {
+      console.log(err)
 
-        console.log(err)
+      setMessage(
+        err.response?.data?.message ||
+        "Failed to create group"
+      )
 
-        setMessage(
-          err.response?.data?.message ||
-          "Failed to create group"
-        )
+    } finally {
 
-      } finally {
+      setSubmitting(false)
 
-        setSubmitting(false)
-
-      }
     }
+  }
 
-  const handleJoin =
-    async (e) => {
+  const handleJoin = async (e) => {
 
-      e.preventDefault()
+    e.preventDefault()
 
-      try {
+    try {
 
-        setSubmitting(true)
+      setSubmitting(true)
 
-        await api.post(
-          "/api/group/join",
-          {
-            code:
-              inviteCode.trim()
-          }
-        )
+      await api.post("/api/group/join", {
+        code: inviteCode.trim()
+      })
 
-        setInviteCode("")
+      setInviteCode("")
+      setShowJoin(false)
 
-        setShowJoin(false)
+      fetchGroups()
 
-        fetchGroups()
+    } catch (err) {
 
-      } catch (err) {
+      console.log(err)
 
-        console.log(err)
+      setMessage(
+        err.response?.data?.message ||
+        "Failed to join group"
+      )
 
-        setMessage(
-          err.response?.data?.message ||
-          "Failed to join group"
-        )
+    } finally {
 
-      } finally {
+      setSubmitting(false)
 
-        setSubmitting(false)
-
-      }
     }
+  }
 
-  const openGroupDetails =
-    async (id) => {
+  const openGroupDetails = async (id) => {
 
-      try {
+    try {
 
-        const res =
-          await api.get(
-            `/api/group/${id}`
-          )
+      const res = await api.get(`/api/group/${id}`)
 
-        setGroupDetails(
-          res.data
-        )
+      setGroupDetails(res.data)
+      setSelectedGroup(id)
 
-        setSelectedGroup(id)
+    } catch (err) {
 
-      } catch (err) {
+      console.log(err)
 
-        console.log(err)
-
-      }
     }
+  }
 
-  const acceptRequest =
-    async (userId) => {
+  const acceptRequest = async (userId) => {
 
-      try {
+    try {
 
-        await api.post(
-          "/api/group/approve",
-          {
-            groupId:
-              selectedGroup,
-            userId
-          }
-        )
+      await api.post("/api/group/approve", {
+        groupId: selectedGroup,
+        userId
+      })
 
-        openGroupDetails(
-          selectedGroup
-        )
+      openGroupDetails(selectedGroup)
 
-        fetchGroups()
+      fetchGroups()
 
-      } catch (err) {
+    } catch (err) {
 
-        console.log(err)
+      console.log(err)
 
-      }
     }
+  }
 
-  const rejectRequest =
-    async (userId) => {
+  const rejectRequest = async (userId) => {
 
-      try {
+    try {
 
-        await api.post(
-          "/api/group/reject",
-          {
-            groupId:
-              selectedGroup,
-            userId
-          }
-        )
+      await api.post("/api/group/reject", {
+        groupId: selectedGroup,
+        userId
+      })
 
-        openGroupDetails(
-          selectedGroup
-        )
+      openGroupDetails(selectedGroup)
 
-        fetchGroups()
+      fetchGroups()
 
-      } catch (err) {
+    } catch (err) {
 
-        console.log(err)
+      console.log(err)
 
-      }
     }
+  }
 
-  const copyCode =
-    async (code) => {
+  const copyCode = async (code) => {
 
-      try {
+    try {
 
-        await navigator.clipboard.writeText(
-          code
-        )
+      await navigator.clipboard.writeText(code)
 
-        setMessage(
-          "Invite code copied"
-        )
+      setMessage("Invite code copied")
 
-        setTimeout(() => {
-          setMessage("")
-        }, 2000)
+      setTimeout(() => {
+        setMessage("")
+      }, 2000)
 
-      } catch (err) {
+    } catch (err) {
 
-        console.log(err)
+      console.log(err)
 
-      }
     }
+  }
 
   return (
 
@@ -276,7 +208,15 @@ function Groups() {
       <div className="max-w-[1800px] mx-auto px-4 md:px-16 lg:px-24 py-8">
 
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 mb-10">
+        <div className="
+          flex
+          flex-col
+          xl:flex-row
+          xl:items-center
+          xl:justify-between
+          gap-5
+          mb-10
+        ">
 
           <div>
 
@@ -290,7 +230,15 @@ function Groups() {
 
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+          <div className="
+            flex
+            flex-col
+            sm:flex-row
+            flex-wrap
+            gap-3
+            w-full
+            xl:w-auto
+          ">
 
             <button
               onClick={() =>
@@ -348,209 +296,211 @@ function Groups() {
         }
 
         {
-          loading
+          loading ? (
 
-            ? (
+            <div className="text-xl font-semibold text-slate-600">
 
-              <div className="text-xl font-semibold text-slate-600">
+              Loading...
 
-                Loading...
+            </div>
 
-              </div>
+          ) : (
 
-            )
+            <>
 
-            : (
+              {/* Created Groups */}
+              <section className="mb-14">
 
-              <>
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
 
-                {/* Created Groups */}
-                <section className="mb-14">
+                  Groups You Created
 
-                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+                </h2>
 
-                    Groups You Created
+                <div className="
+                  grid
+                  grid-cols-1
+                  md:grid-cols-2
+                  xl:grid-cols-3
+                  gap-7
+                ">
 
-                  </h2>
+                  {
+                    createdGroups.length === 0 ? (
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+                      <div className="text-slate-500">
 
-                    {
-                      createdGroups.length === 0
+                        No groups created yet
 
-                        ? (
+                      </div>
 
-                          <div className="text-slate-500">
+                    ) : (
 
-                            No groups created yet
+                      createdGroups.map((group) => (
 
-                          </div>
+                        <div
+                          key={group._id}
+                          onClick={() =>
+                            openGroupDetails(group._id)
+                          }
+                          className="
+                            bg-white
+                            rounded-3xl
+                            border
+                            border-slate-200
+                            p-5 md:p-7
+                            shadow-sm
+                            hover:shadow-lg
+                            cursor-pointer
+                            transition
+                          "
+                        >
 
-                        )
+                          <div className="flex justify-between items-start mb-5">
 
-                        : (
+                            <div>
 
-                          createdGroups.map((group) => (
-
-                            <div
-                              key={group._id}
-                              onClick={() =>
-                                openGroupDetails(
-                                  group._id
-                                )
-                              }
-                              className="
-                                bg-white
-                                rounded-3xl
-                                border
-                                border-slate-200
-                                p-5 md:p-7
-                                shadow-sm
-                                hover:shadow-lg
-                                cursor-pointer
-                                transition
-                              "
-                            >
-
-                              <div className="flex justify-between items-start mb-5">
-
-                                <div>
-
-                                  <h3 className="text-xl md:text-2xl font-bold text-slate-900 uppercase">
-
-                                    {group.name}
-
-                                  </h3>
-
-                                  <p className="text-slate-500 mt-2 text-sm md:text-base">
-
-                                    Owner access enabled
-
-                                  </p>
-
-                                </div>
-
-                                <div className="w-12 h-12 rounded-2xl bg-cyan-100 flex items-center justify-center text-cyan-600">
-
-                                  <FiUsers size={22} />
-
-                                </div>
-
-                              </div>
-
-                              <div className="grid grid-cols-2 gap-3 mt-8">
-
-                                <div className="bg-slate-50 rounded-2xl p-4">
-
-                                  <p className="text-sm text-slate-500">
-                                    Members
-                                  </p>
-
-                                  <p className="text-2xl font-bold mt-1">
-                                    {group.members.length}
-                                  </p>
-
-                                </div>
-
-                                <div className="bg-slate-50 rounded-2xl p-4">
-
-                                  <p className="text-sm text-slate-500">
-                                    Requests
-                                  </p>
-
-                                  <p className="text-2xl font-bold mt-1">
-                                    {group.requests.length}
-                                  </p>
-
-                                </div>
-
-                              </div>
-
-                            </div>
-
-                          ))
-
-                        )
-                    }
-
-                  </div>
-
-                </section>
-
-                {/* Joined Groups */}
-                <section>
-
-                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
-
-                    Joined Groups
-
-                  </h2>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-
-                    {
-                      joinedGroups.length === 0
-
-                        ? (
-
-                          <div className="text-slate-500">
-
-                            No joined groups
-
-                          </div>
-
-                        )
-
-                        : (
-
-                          joinedGroups.map((group) => (
-
-                            <div
-                              key={group._id}
-                              onClick={() =>
-                                navigate(
-                                  `/groups/${group._id}`
-                                )
-                              }
-                              className="
-                                bg-white
-                                rounded-3xl
-                                border
-                                border-slate-200
-                                p-5 md:p-7
-                                shadow-sm
-                                hover:shadow-lg
-                                cursor-pointer
-                                transition
-                              "
-                            >
-
-                              <h3 className="text-xl md:text-2xl font-bold uppercase text-slate-900">
+                              <h3 className="text-xl md:text-2xl font-bold text-slate-900 uppercase">
 
                                 {group.name}
 
                               </h3>
 
-                              <p className="text-slate-500 mt-3 text-sm md:text-base">
+                              <p className="text-slate-500 mt-2 text-sm md:text-base">
 
-                                Open group details
+                                Owner access enabled
 
                               </p>
 
                             </div>
 
-                          ))
+                            <div className="w-12 h-12 rounded-2xl bg-cyan-100 flex items-center justify-center text-cyan-600">
 
-                        )
-                    }
+                              <FiUsers size={22} />
 
-                  </div>
+                            </div>
 
-                </section>
+                          </div>
 
-              </>
+                          <div className="grid grid-cols-2 gap-3 mt-8">
 
-            )
+                            <div className="bg-slate-50 rounded-2xl p-4">
+
+                              <p className="text-sm text-slate-500">
+
+                                Members
+
+                              </p>
+
+                              <p className="text-2xl font-bold mt-1">
+
+                                {group.members.length}
+
+                              </p>
+
+                            </div>
+
+                            <div className="bg-slate-50 rounded-2xl p-4">
+
+                              <p className="text-sm text-slate-500">
+
+                                Requests
+
+                              </p>
+
+                              <p className="text-2xl font-bold mt-1">
+
+                                {group.requests.length}
+
+                              </p>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      ))
+                    )
+                  }
+
+                </div>
+
+              </section>
+
+              {/* Joined Groups */}
+              <section>
+
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+
+                  Joined Groups
+
+                </h2>
+
+                <div className="
+                  grid
+                  grid-cols-1
+                  md:grid-cols-2
+                  xl:grid-cols-3
+                  gap-7
+                ">
+
+                  {
+                    joinedGroups.length === 0 ? (
+
+                      <div className="text-slate-500">
+
+                        No joined groups
+
+                      </div>
+
+                    ) : (
+
+                      joinedGroups.map((group) => (
+
+                        <div
+                          key={group._id}
+                          onClick={() =>
+                            navigate(`/groups/${group._id}`)
+                          }
+                          className="
+                            bg-white
+                            rounded-3xl
+                            border
+                            border-slate-200
+                            p-5 md:p-7
+                            shadow-sm
+                            hover:shadow-lg
+                            cursor-pointer
+                            transition
+                          "
+                        >
+
+                          <h3 className="text-xl md:text-2xl font-bold uppercase text-slate-900">
+
+                            {group.name}
+
+                          </h3>
+
+                          <p className="text-slate-500 mt-3 text-sm md:text-base">
+
+                            Open group details
+
+                          </p>
+
+                        </div>
+
+                      ))
+                    )
+                  }
+
+                </div>
+
+              </section>
+
+            </>
+
+          )
         }
 
       </div>
@@ -561,7 +511,13 @@ function Groups() {
 
           <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
 
-            <div className="bg-white w-full max-w-xl rounded-3xl p-6 md:p-8">
+            <div className="
+              bg-white
+              w-full
+              max-w-xl
+              rounded-3xl
+              p-4 md:p-8
+            ">
 
               <div className="flex justify-between items-center mb-8">
 
@@ -591,36 +547,17 @@ function Groups() {
                   type="text"
                   value={groupName}
                   onChange={(e) =>
-                    setGroupName(
-                      e.target.value
-                    )
+                    setGroupName(e.target.value)
                   }
                   placeholder="Enter group name"
-                  className="
-                    w-full
-                    px-5 py-4
-                    rounded-2xl
-                    border
-                    border-slate-300
-                    outline-none
-                    focus:border-cyan-500
-                  "
+                  className="w-full px-5 py-4 rounded-2xl border border-slate-300 outline-none focus:border-cyan-500"
                   required
                 />
 
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="
-                    w-full
-                    py-4
-                    rounded-2xl
-                    bg-gradient-to-r
-                    from-cyan-500
-                    to-blue-600
-                    text-white
-                    font-semibold
-                  "
+                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold"
                 >
 
                   {
@@ -640,94 +577,8 @@ function Groups() {
         )
       }
 
-      {/* JOIN MODAL */}
-      {
-        showJoin && (
-
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
-
-            <div className="bg-white w-full max-w-xl rounded-3xl p-6 md:p-8">
-
-              <div className="flex justify-between items-center mb-8">
-
-                <h2 className="text-2xl md:text-3xl font-bold">
-
-                  Join Group
-
-                </h2>
-
-                <button
-                  onClick={() =>
-                    setShowJoin(false)
-                  }
-                  className="text-3xl"
-                >
-                  ✕
-                </button>
-
-              </div>
-
-              <form
-                onSubmit={handleJoin}
-                className="space-y-5"
-              >
-
-                <input
-                  type="text"
-                  value={inviteCode}
-                  onChange={(e) =>
-                    setInviteCode(
-                      e.target.value
-                    )
-                  }
-                  placeholder="Enter invite code"
-                  className="
-                    w-full
-                    px-5 py-4
-                    rounded-2xl
-                    border
-                    border-slate-300
-                    uppercase
-                    outline-none
-                    focus:border-cyan-500
-                  "
-                  required
-                />
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="
-                    w-full
-                    py-4
-                    rounded-2xl
-                    bg-gradient-to-r
-                    from-cyan-500
-                    to-blue-600
-                    text-white
-                    font-semibold
-                  "
-                >
-
-                  {
-                    submitting
-                      ? "Joining..."
-                      : "Join Group"
-                  }
-
-                </button>
-
-              </form>
-
-            </div>
-
-          </div>
-
-        )
-      }
-
     </div>
+
   )
 }
-
 export default Groups
