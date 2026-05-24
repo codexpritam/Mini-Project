@@ -155,7 +155,7 @@ function Home() {
             <div className="
               absolute
               top-20
-              left-0
+              right-4
               w-[220px]
               bg-white
               border-b
