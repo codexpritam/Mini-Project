@@ -126,7 +126,7 @@ npm start
 ### Open Application
 
 ```text
-http://localhost:3000
+http://localhost:5000
 ```
 
 ---
@@ -151,32 +151,7 @@ spendora/
 │
 └── README.md
 ```
-
----
-
-## Screenshots
-
-### Home Page
-
-(Add Screenshot Here)
-
-### Dashboard
-
-(Add Screenshot Here)
-
-### Personal Expenses
-
-(Add Screenshot Here)
-
-### Group Expenses
-
-(Add Screenshot Here)
-
-### Transaction History
-
-(Add Screenshot Here)
-
----
+ 
 
 ## Future Scope
 
@@ -189,13 +164,6 @@ spendora/
 * AI-Based Spending Insights
 * Mobile Application Support
 
----
-
-## Team Members
-
-* Preetam Raghuvanshi
-
----
 
 ## Conclusion
 
