@@ -163,62 +163,56 @@ function DashboardCharts({
           Personal vs Group
         </h2>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center relative">
 
-          <PieChart
-            width={220}
-            height={220}
-          >
-            <Pie
-              data={
-                splitData
-              }
-              dataKey="value"
-              cx="50%"
-              cy="50%"
-              innerRadius={
-                68
-              }
-              outerRadius={
-                92
-              }
-              paddingAngle={
-                2
-              }
-            >
-              {splitData.map(
-                (
-                  item,
-                  index
-                ) => (
-                  <Cell
-                    key={
-                      index
-                    }
-                    fill={
-                      item.color
-                    }
-                  />
-                )
-              )}
-            </Pie>
-          </PieChart>
+  <PieChart
+    width={220}
+    height={220}
+  >
+    <Pie
+      data={splitData}
+      dataKey="value"
+      cx="50%"
+      cy="50%"
+      innerRadius={68}
+      outerRadius={92}
+      paddingAngle={2}
+    >
+      {splitData.map((item, index) => (
+        <Cell
+          key={index}
+          fill={item.color}
+        />
+      ))}
+    </Pie>
+  </PieChart>
 
-        </div>
+  <div className="
+    absolute
+    inset-0
+    flex
+    flex-col
+    items-center
+    justify-center
+    pointer-events-none
+  ">
+    <p className="
+      text-lg
+      md:text-2xl
+      font-bold
+      max-w-[120px]
+      text-center
+      break-words
+    ">
+      ₹{totalExpense.toLocaleString("en-IN")}
+    </p>
 
-        {/* Total */}
-        <div className="text-center -mt-36 mb-16">
+    <p className="text-slate-500">
+      Total
+    </p>
+  </div>
 
-          <p className="text-4xl font-bold text-slate-900">
-            ₹
-            {grandTotal}
-          </p>
-
-          <p className="text-slate-500">
-            Total
-          </p>
-
-        </div>
+</div>
 
         {/* Legends */}
         <div className="space-y-4">
