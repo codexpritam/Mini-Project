@@ -1,13 +1,22 @@
+// routes/ai.js
 const express = require('express');
 const { GoogleGenAI } = require('@google/genai');
 
 const router = express.Router();
 
-// Gemini Initialize kiya (Ensure karein aapke .env mein GEMINI_API_KEY ho)
+// Gemini Initialize kiya
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 router.post('/ai-insights', async (req, res) => {
   try {
+    // Check karein ki kya backend tak API key pahonch rahi hai
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(500).json({ 
+        error: "Backend Par API Key Missing Hai!", 
+        debugMessage: "Please add GEMINI_API_KEY in Render Environment Variables." 
+      });
+    }
+
     const { totalBudget, monthlySpent, categories, rawExpenses } = req.body;
 
     const prompt = `
@@ -15,7 +24,7 @@ router.post('/ai-insights', async (req, res) => {
       - Total Monthly Budget: ₹${totalBudget}
       - Total Spent This Month: ₹${monthlySpent}
       - Breakdown by Categories: ${JSON.stringify(categories)}
-      - Detailed Expenses List: ${JSON.stringify(rawExpenses.slice(0, 15))}
+      - Detailed Expenses List: ${JSON.stringify(rawExpenses ? rawExpenses.slice(0, 15) : [])}
 
       Provide response strictly in JSON format matching this schema:
       {
@@ -36,12 +45,18 @@ router.post('/ai-insights', async (req, res) => {
       }
     });
 
-    res.json(JSON.parse(response.text));
+    // Response parse karke bhejenge
+    return res.json(JSON.parse(response.text));
+
   } catch (error) {
-    console.error("AI Error:", error);
-    res.status(500).json({ error: "AI insight fail ho gaya" });
+    console.error("AI Error Details:", error);
+    
+    // Agar Gemini fail hota hai, toh exact error message frontend ko bhej do taaki hum dekh sakein!
+    return res.status(500).json({ 
+      error: "Gemini API call ya parsing fail ho gayi.", 
+      details: error.message || error 
+    });
   }
 });
 
-// CommonJS export use karein jo aapke server file se match kare
 module.exports = router;
