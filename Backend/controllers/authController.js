@@ -14,13 +14,13 @@ const crypto = require("crypto")
 
 const createToken = (user) => {
   return jwt.sign(
-    {
+    {   //payload
       _id: user._id,
       emailId: user.emailId
     },
-    process.env.JWT_SECRET_KEY,
+    process.env.JWT_SECRET_KEY,  //secret key
     {
-      expiresIn: "1d"
+      expiresIn: "1d"   //option 
     }
   )
 }

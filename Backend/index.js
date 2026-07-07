@@ -15,6 +15,7 @@ const incomeRoutes = require("./routes/incomeRoutes")
 const groupRoutes = require("./routes/groupRoutes")
 const cors = require("cors")
 const budgetRoutes = require("./routes/budgetRoutes")
+const aiRouter = require('./routes/ai.js');
 
 // const allowedOrigins = [
 //   "http://localhost:5173",
@@ -43,7 +44,7 @@ app.use("/api",incomeRoutes);
 app.use("/api",groupRoutes)
 
 app.use("/api", budgetRoutes)
-
+app.use('/api', aiRouter);
 
     async  function InitialiZation(){
     try{
