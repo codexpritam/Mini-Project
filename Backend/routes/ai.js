@@ -1,9 +1,9 @@
-import express from 'express';
-import { GoogleGenAI } from '@google/genai';
+const express = require('express');
+const { GoogleGenAI } = require('@google/genai');
 
 const router = express.Router();
 
-// Gemini Initialize kiya
+// Gemini Initialize kiya (Ensure karein aapke .env mein GEMINI_API_KEY ho)
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 router.post('/ai-insights', async (req, res) => {
@@ -43,4 +43,5 @@ router.post('/ai-insights', async (req, res) => {
   }
 });
 
-export default router;
+// CommonJS export use karein jo aapke server file se match kare
+module.exports = router;
