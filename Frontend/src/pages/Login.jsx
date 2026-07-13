@@ -3,7 +3,7 @@ import {
   useNavigate,
   Link
 } from "react-router-dom"
-
+import { Eye, EyeOff } from "lucide-react"
 import api from "../api/axios"
 
 import {
@@ -229,68 +229,47 @@ const handleForgotPassword =
 
 
 
-          {/* Password */}
-          <div>
+         {/* Password */}
+<div>
+  <label
+    htmlFor="password"
+    className="block text-sm font-medium text-slate-700 mb-2"
+  >
+    Password
+  </label>
 
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-slate-700 mb-2"
-            >
-              Password
-            </label>
+  <div className="relative">
+    <input
+      id="password"
+      name="password"
+      autoComplete="current-password"
+      type={showPassword ? "text" : "password"}
+      placeholder="Enter Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      className="w-full px-5 py-4 rounded-2xl border border-slate-300 outline-none focus:border-cyan-500 pr-14"
+    />
 
-            <div className="relative">
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1 transition-colors"
+    >
+      {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
+    </button>
+  </div>
 
-              <input
-                id="password"
-                name="password"
-                autoComplete="current-password"
-                type={
-                  showPassword
-                    ? "text"
-                    : "password"
-                }
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) =>
-                  setPassword(
-                    e.target.value
-                  )
-                }
-                className="w-full px-5 py-4 rounded-2xl border border-slate-300 outline-none focus:border-cyan-500 pr-14"
-              />
-
-              <button
-                type="button"
-                onClick={() =>
-                  setShowPassword(
-                    !showPassword
-                  )
-                }
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 cursor-pointer"
-              >
-                {showPassword
-                  ? "🙈"
-                  : "👁"}
-              </button>
-
-            </div>
-
-            <div className="mt-2 text-right">
-
-              <button
-                type="button"
-                onClick={
-                  handleForgotPassword
-                }
-                className="text-sm text-cyan-600 hover:text-blue-600 cursor-pointer"
-              >
-                Forgot password?
-              </button>
-
-            </div>
-
-          </div>
+  {/* Forgot Password Link */}
+  <div className="mt-2 text-right">
+    <button
+      type="button"
+      onClick={handleForgotPassword}
+      className="text-sm text-cyan-600 hover:text-blue-600 cursor-pointer font-medium transition-colors"
+    >
+      Forgot password?
+    </button>
+  </div>
+</div>
 
 
 

@@ -6,7 +6,7 @@ import {
   useNavigate,
   Link
 } from "react-router-dom"
-
+import { Eye, EyeOff } from "lucide-react"
 import api from "../api/axios"
 
 import {
@@ -215,46 +215,30 @@ setTimeout(() => {
             />
           </div>
 
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Password
-            </label>
+   {/* Password */}
+<div>
+  <label className="block text-sm font-medium text-slate-700 mb-2">
+    Password
+  </label>
 
-            <div className="relative">
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Enter Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      className="w-full px-5 py-4 rounded-2xl border border-slate-300 outline-none focus:border-cyan-500 pr-14"
+    />
 
-              <input
-                type={
-                  showPassword
-                    ? "text"
-                    : "password"
-                }
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) =>
-                  setPassword(
-                    e.target.value
-                  )
-                }
-                className="w-full px-5 py-4 rounded-2xl border border-slate-300 outline-none focus:border-cyan-500 pr-14"
-              />
-
-              <button
-                type="button"
-                onClick={() =>
-                  setShowPassword(
-                    !showPassword
-                  )
-                }
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 cursor-pointer"
-              >
-                {showPassword
-                  ? "🙈"
-                  : "👁"}
-              </button>
-
-            </div>
-          </div>
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1 transition-colors"
+    >
+      {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
+    </button>
+  </div>
+</div>
 
           {/* Error */}
           {error && (
