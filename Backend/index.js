@@ -23,10 +23,12 @@ const aiRouter = require('./routes/ai.js');
 //   "https://spendora.vercel.app"
 // ]
 
-app.use(cors({
-  origin: "https://spendora-app-yjqm.onrender.com",
-  credentials: true
-}));//frontend se connect krega syd
+app.use(
+  cors({
+    origin: "https://spendora-azure.vercel.app",
+    credentials: true,
+  })
+);;//frontend se connect krega syd
 
 app.use(express.json());//parse JSON body from requests
 app.set("trust proxy", 1);
